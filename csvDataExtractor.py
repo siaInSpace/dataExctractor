@@ -47,6 +47,15 @@ def toSingleArray(sortedTimelessData, index):
     return tempArray
 
 
+def afterAndBeforeArray(data, t_start, t_end):
+    """remove data before t_start and after t_end"""
+    tempArray = []
+    for i in range(len(data)):
+        if data[i][0] >= t_start and data[i][0] <= t_end:
+            tempArray.append(data[i])
+    return tempArray
+
+
 def plot(data, index):
     plt.figure(finalIndex[index])
     plt.plot(toSingleArray(data, 0), toSingleArray(data, index))
@@ -60,9 +69,10 @@ def test():
         line = f.readline()
     data.sort()
     data = removeStartTime(data)
+    data = afterAndBeforeArray(data, 300, 800)
     for i in range(2, len(data[0])):
         plot(data, i)
-    plt.show()
+    plt.show()  # looked at data, seems luanch at t = 350++ a bit and crash at 700--
 
 
 test()
