@@ -39,11 +39,17 @@ def removeStartTime(sortedData):
     return sortedData
 
 
-def toSingeArray(sortedTimelessData, index):
+def toSingleArray(sortedTimelessData, index):
+    """convert a index of data to a single array"""
     tempArray = []
     for i in range(len(sortedTimelessData)):
         tempArray.append(sortedTimelessData[i][index])
     return tempArray
+
+
+def plot(x, index, data):
+    plt.figure(INDEX[index])
+    plt.plot(x, toSingleArray(data, index))
 
 
 data = []
