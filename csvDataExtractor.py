@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 f = open("Launch_P-1B.csv", "r")
-INDEX = ["startTime", "endTime", "acc_x", "acc_y", "acc_z", "gyr_x",
-         "gyr_y", "gyr_z", "accGyr_temp", "bmp_temp", "pressure", "height"]
+finalIndex = ["startTime", "endTime", "acc_x", "acc_y", "acc_z", "gyr_x",
+              "gyr_y", "gyr_z", "accGyr_temp", "bmp_temp", "pressure", "height"]
 f.readline()
 
 
@@ -47,15 +47,22 @@ def toSingleArray(sortedTimelessData, index):
     return tempArray
 
 
-def plot(x, index, data):
-    plt.figure(INDEX[index])
-    plt.plot(x, toSingleArray(data, index))
+def plot(data, index):
+    plt.figure(finalIndex[index])
+    plt.plot(toSingleArray(data, 0), toSingleArray(data, index))
 
 
-data = []
-line = f.readline()
-while line != "":
-    data.append(readline(line))
+def test():
+    data = []
     line = f.readline()
-data.sort()
-data = removeStartTime(data)
+    while line != "":
+        data.append(readline(line))
+        line = f.readline()
+    data.sort()
+    data = removeStartTime(data)
+    for i in range(2, len(data[0])):
+        plot(data, i)
+    plt.show()
+
+
+test()
