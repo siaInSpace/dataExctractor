@@ -2,8 +2,7 @@
 csvDataExtractor.py
 Creator: Sindre Aalhus
 Version: 1.4
-Program to retrive data from a csv file, remodell the structure of the 
-    file and plot the result
+Program to retrive data from a csv file, remodell the structure of the file and plot the result
 """
 
 import matplotlib.pyplot as plt
