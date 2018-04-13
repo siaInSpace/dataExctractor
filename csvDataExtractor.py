@@ -2,13 +2,15 @@
 csvDataExtractor.py
 Creator: Sindre Aalhus
 Version: 1.4
-Program to retrive data from a csv file, remodell the structure of the file and plot the result
+Program to retrive data from a csv file, remodell the structure of the
+    file and plot the result
 """
 
 import matplotlib.pyplot as plt
 f = open("Launch_P-1B.csv", "r")
-finalIndex = ["startTime", "endTime", "acc_x", "acc_y", "acc_z", "gyr_x",
-              "gyr_y", "gyr_z", "accGyr_temp", "bmp_temp", "pressure", "height"]
+finalIndex = ["startTime", "endTime", "acc_x", "acc_y", "acc_z",
+              "gyr_x", "gyr_y", "gyr_z", "accGyr_temp", "bmp_temp",
+              "pressure", "height"]
 f.readline()
 
 
@@ -62,7 +64,8 @@ def toSingleArray(sortedTimelessData, index):
     """convert a index of data to a single array
 
     Arguments:
-        sortedTimelessData {list} -- a list sorted and removed lowest time from all values
+        sortedTimelessData {list} -- a list sorted and removed lowest
+            time from all values
         index {int} -- the index of the list to convert
     """
     tempArray = []
@@ -86,6 +89,13 @@ def afterAndBeforeArray(data, t_start, t_end):
     return tempArray
 
 
+def offsetArray(data):
+    for i in range(len(data)):
+        data[i][2] = data[i][2] * 2
+        data[i][11] = data[i][11] - 300
+    return data
+
+
 def plot(data, index):
     """Plot data with x as time axis
 
@@ -95,7 +105,17 @@ def plot(data, index):
     """
     plt.figure(finalIndex[index])
     # plt.scatter(toSingleArray(data, 0), toSingleArray(data, index))
-    plt.plot(toSingleArray(data, 0), toSingleArray(data, index))
+    x = toSingleArray(data, 0)
+    y = toSingleArray(data, index)
+    plt.plot(x, y)
+
+
+def singlePlotWithOffset(data, indexes):
+    for i in indexes:
+        x = toSingleArray(data, 0)
+        y = toSingleArray(data, i)
+        plt.plot(x, y, label=finalIndex[i])
+        plt.title("removed 300 from heigt\ndoubled x-acceleration")
 
 
 def main():
@@ -108,10 +128,30 @@ def main():
         line = f.readline()
     data.sort()
     data = removeStartTime(data)
-    data = afterAndBeforeArray(data, 300, 800)
+    data = afterAndBeforeArray(data, 385, 425)
     for i in range(2, len(data[0])):
         plot(data, i)
-    plt.show()  # looked at data, seems luanch at t = 300++ a bit and crash at 800--
+    plt.show()
+    # looked at data, seems luanch at t = 300++ a bit and crash at 800--
 
 
-main()
+def singlePlotMain():
+    """Main, but in a single plot and only interesting data
+    """
+    data = []
+    line = f.readline()
+    while line != "":
+        data.append(readline(line))
+        line = f.readline()
+    data.sort()
+    data = removeStartTime(data)
+    data = afterAndBeforeArray(data, 386, 398)
+    data = offsetArray(data)
+    indexToPlot = [2, 5, 11]
+    singlePlotWithOffset(data, indexToPlot)
+    plt.legend()
+    plt.show()
+
+
+# main()
+singlePlotMain()
