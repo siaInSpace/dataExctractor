@@ -2,8 +2,6 @@ import matplotlib.pyplot as plt
 f = open("Launch_P-1B.csv", "r")
 INDEX = ["startTime", "endTime", "acc_x", "acc_y", "acc_z", "gyr_x",
          "gyr_y", "gyr_z", "accGyr_temp", "bmp_temp", "pressure", "height"]
-# currIndex =  ,ax/ms2,ay/ms2,az/ms2,ba/m,bp/pa,bt/degc,gps,gx/dsec,gy/dsec,gz/dsec,it/degc,t1,t2
-# currIndex =
 f.readline()
 
 
@@ -41,12 +39,17 @@ def removeStartTime(sortedData):
     return sortedData
 
 
+def toSingeArray(sortedTimelessData, index):
+    tempArray = []
+    for i in range(len(sortedTimelessData)):
+        tempArray.append(sortedTimelessData[i][index])
+    return tempArray
+
+
 data = []
 line = f.readline()
 while line != "":
     data.append(readline(line))
     line = f.readline()
 data.sort()
-for i in data[0:5]:
-    for j in i:
-        print(j)
+data = removeStartTime(data)
