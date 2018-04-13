@@ -58,6 +58,7 @@ def afterAndBeforeArray(data, t_start, t_end):
 
 def plot(data, index):
     plt.figure(finalIndex[index])
+    # plt.scatter(toSingleArray(data, 0), toSingleArray(data, index))
     plt.plot(toSingleArray(data, 0), toSingleArray(data, index))
 
 
