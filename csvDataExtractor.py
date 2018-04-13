@@ -21,11 +21,23 @@ def readline(line):
     """convert from a line to a array in a predefined index"""
     tempArray = []
     line = line.split(",")
-    line = line.remove(line[0])
-    line = line.remove(line[6])
+    line.remove(line[0])
+    line.remove(line[6])
+    line.remove(line[6])
     ind = [0, 1, 2, 6, 7, 8, 9, 5, 4, 3]
     tempArray.append(timeConverter(line[10]))
     tempArray.append(timeConverter(line[11]))
     for i in ind:
-        tempArray.append(line[i])
+        tempArray.append(float(line[i]))
     return tempArray
+
+
+data = []
+line = f.readline()
+while line != "":
+    data.append(readline(line))
+    line = f.readline()
+
+for i in data[0:5]:
+    for j in i:
+        print(j)
