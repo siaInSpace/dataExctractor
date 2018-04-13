@@ -32,12 +32,21 @@ def readline(line):
     return tempArray
 
 
+def removeStartTime(sortedData):
+    """removes start time from time values"""
+    t0 = sortedData[0][0]
+    for i in range(len(sortedData)):
+        sortedData[i][0] = sortedData[i][0] - t0
+        sortedData[i][1] = sortedData[i][1] - t0
+    return sortedData
+
+
 data = []
 line = f.readline()
 while line != "":
     data.append(readline(line))
     line = f.readline()
-
+data.sort()
 for i in data[0:5]:
     for j in i:
         print(j)
