@@ -11,7 +11,7 @@ f = open("Launch_P-1B.csv", "r")
 finalIndex = ["startTime", "endTime", "acc_x", "acc_y", "acc_z",
               "gyr_x", "gyr_y", "gyr_z", "accGyr_temp", "bmp_temp",
               "pressure", "height"]
-f.readline()
+f.readline()  # removes first line wich is the order of the sensors
 
 
 def timeConverter(data):
