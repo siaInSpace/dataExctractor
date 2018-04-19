@@ -110,6 +110,51 @@ def plot(data, index):
     plt.plot(x, y)
 
 
+def getMaxValue(data, index):
+    """get max value of an index in data list
+
+    Args:
+        data (list): the data to be searched
+        index (int): the index to search in data
+    """
+    maxValue = [-99999, 0]
+    for i in data:
+        if i[index] > maxValue[0]:
+            maxValue[0] = i[index]
+            maxValue[1] = i[0]
+    return maxValue[1]
+
+
+def getMinValue(data, index):
+    """get min vaue of an index in data list
+
+    Args:
+        data (list): the data to be searched
+        index (int): the index to search in data
+    """
+    minValue = [99999999999.9, 0]
+    for i in data:
+        if i[index] < minValue[0]:
+            minValue[0] = i[index]
+            minValue[1] = i[0]
+    return minValue[1]
+
+
+def plotVerticalLine(data, index):
+    """plots a vertical line at the max value for a index in data list
+
+    Args:
+        data (list): the data to search
+        IndexError (int): the index to be searched
+        minOrMax (string): to search for the lowest or highest value
+    """
+    maxValue = getMaxValue(data, index)
+    locs, labels = plt.yticks()
+    points = [max(locs), min(locs)]
+    plt.plot([maxValue, maxValue], points, "--")
+    plt.text(maxValue, points[0], s=(minOrMax + finalIndex[index]))
+
+
 def singlePlotWithOffset(data, indexes):
     for i in indexes:
         x = toSingleArray(data, 0)
@@ -140,16 +185,20 @@ def singlePlotMain():
     """
     data = []
     line = f.readline()
+    count = 0
     while line != "":
         data.append(readline(line))
         line = f.readline()
+        count += 1
     data.sort()
     data = removeStartTime(data)
-    data = afterAndBeforeArray(data, 386, 398)
+    data = afterAndBeforeArray(data, 385, 425)
     data = offsetArray(data)
     indexToPlot = [2, 5, 11]
     singlePlotWithOffset(data, indexToPlot)
     plt.legend()
+    # plotVerticalLine(data, 11, "max")
+    # plotVerticalLine(data, 2, "min")
     plt.show()
 
 
